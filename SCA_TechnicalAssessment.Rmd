@@ -1,0 +1,60 @@
+---
+title: "Data Science Technical Assessment"
+author: "Adanna"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##The Process
+
+The goal of this assessment is to discover which industry has the highest rate of fake job postings and  graphically represent that.
+
+In order to discover the industry with the highest rate of fame job postings, I had to study the given dataset.
+
+I discovered that the fake job postings had a value of "1" in the fraudulent column. 
+
+I also filtered the dataset to find missing values and replaced all missing values with NA which means "Not available" to ensure there are no empty cells. 
+
+To install the packages needed, I ran the code below
+
+install.packages("tidyverse")
+install.packages("ggplot2")
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+
+Storing the csv file as a data frame, I ran the following:
+
+```{r }
+job_postings <- read_csv("fake_job_postings.csv")
+```
+
+In order to view the column names, I ran:
+
+```{r }
+colnames(job_postings)
+```
+
+Since fraudulent postings have a fraudulent value of "1", I filtered the dataset to show only postings with a fraudulent value of "1" and saved it in a separate dataframe.
+
+```{r }
+fraudulent_posting <- filter(job_postings, fraudulent==1)
+  
+```
+
+In order to show the industries with the highest occurrence of fraudulent postings, I plotted a bar chart of all the industries in the separate data frame of only fraudulent postings
+
+```{r}
+ggplot(data = fraudulent_posting) + geom_bar(mapping = aes(x = industry)) +theme(axis.text.x= element_text(angle=95,vjust=0.5,hjust=1))
+
+```
+
+
+According to the bar chart generated, I discovered that most fake job postings do not state an industry and the fake job postings that do state an industry are mostly from the **Oil & Energy industry.**
+
